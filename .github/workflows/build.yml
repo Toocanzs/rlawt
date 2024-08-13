@@ -63,42 +63,42 @@ jobs:
         path: build/windows-aarch64/Release/rlawt.dll
         retention-days: 1
         if-no-files-found: error
-  macos:
-    runs-on: macos-11
-    steps:
-    - uses: actions/checkout@v3
-    - name: install dependencies
-      run: |
-        set -e -x
-        curl -Lo jdk-11.0.15+10.zip 'https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.15_10.tar.gz'
-        echo "e84143a6c633a26aeefcb1fd5ad8dfb9e952cfec2a1af5c9d9b69f2390990dac  jdk-11.0.15+10.zip" | shasum -a 256 -c
-        tar -xf jdk-11.0.15+10.zip
-    - name: build macos-x86_64
-      run: |
-        set -e -x
-        mkdir -p build/macos-x86_64
-        cd build/macos-x86_64
-        cmake ../../ -DCMAKE_OSX_ARCHITECTURES=x86_64
-        cmake --build . --config Release
-    - uses: actions/upload-artifact@v3
-      with:
-        name: macos-x86_64
-        path: build/macos-x86_64/librlawt.dylib
-        retention-days: 1
-        if-no-files-found: error
-    - name: build macos-aarch64
-      run: |
-        set -e -x
-        mkdir -p build/macos-aarch64
-        cd build/macos-aarch64
-        cmake ../../ -DCMAKE_OSX_ARCHITECTURES=arm64 -DJAVA_JVM_LIBRARY=../../jdk-11.0.15+10/Contents/Home/lib/server/libjvm.dylib -DJAVA_AWT_LIBRARY=../../jdk-11.0.15+10/Contents/Home/lib/libjawt.dylib
-        cmake --build . --config Release
-    - uses: actions/upload-artifact@v3
-      with:
-        name: macos-aarch64
-        path: build/macos-aarch64/librlawt.dylib
-        retention-days: 1
-        if-no-files-found: error
+#  macos:
+#    runs-on: macos-11
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: install dependencies
+#      run: |
+#        set -e -x
+#        curl -Lo jdk-11.0.15+10.zip 'https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/OpenJDK11U-jdk_aarch64_mac_hotspot_11.0.15_10.tar.gz'
+#        echo "e84143a6c633a26aeefcb1fd5ad8dfb9e952cfec2a1af5c9d9b69f2390990dac  jdk-11.0.15+10.zip" | shasum -a 256 -c
+#        tar -xf jdk-11.0.15+10.zip
+#    - name: build macos-x86_64
+#      run: |
+#        set -e -x
+#        mkdir -p build/macos-x86_64
+#        cd build/macos-x86_64
+#        cmake ../../ -DCMAKE_OSX_ARCHITECTURES=x86_64
+#        cmake --build . --config Release
+#    - uses: actions/upload-artifact@v3
+#      with:
+#        name: macos-x86_64
+#        path: build/macos-x86_64/librlawt.dylib
+#        retention-days: 1
+#        if-no-files-found: error
+#    - name: build macos-aarch64
+#      run: |
+#        set -e -x
+#        mkdir -p build/macos-aarch64
+#        cd build/macos-aarch64
+#        cmake ../../ -DCMAKE_OSX_ARCHITECTURES=arm64 -DJAVA_JVM_LIBRARY=../../jdk-11.0.15+10/Contents/Home/lib/server/libjvm.dylib -DJAVA_AWT_LIBRARY=../../jdk-11.0.15+10/Contents/Home/lib/libjawt.dylib
+#        cmake --build . --config Release
+#    - uses: actions/upload-artifact@v3
+#      with:
+#        name: macos-aarch64
+#        path: build/macos-aarch64/librlawt.dylib
+#        retention-days: 1
+#        if-no-files-found: error
   linux-amd64:
     needs: [windows, macos]
     runs-on: ubuntu-20.04
