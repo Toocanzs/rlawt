@@ -100,7 +100,8 @@ jobs:
 #        retention-days: 1
 #        if-no-files-found: error
   linux-amd64:
-    needs: [windows, macos]
+#    needs: [windows, macos]
+    needs: [windows]
     runs-on: ubuntu-20.04
     container:
       image: amd64/centos:7.9.2009
