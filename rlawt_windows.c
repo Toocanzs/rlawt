@@ -53,6 +53,17 @@ static bool makeCurrent(JNIEnv *env, HDC dc, HGLRC context) {
 	return true;
 }
 
+JNIEXPORT jlong JNICALL Java_net_runelite_rlawt_AWTContext_getHWND(JNIEnv *env, jobject self) {
+	AWTContext *ctx = rlawtGetContext(env, self);
+	if (!ctx || !rlawtContextState(env, ctx, true)) {
+		return 0;
+	}
+
+	ctx->dspi = (JAWT_Win32DrawingSurfaceInfo*) ctx->dsi->platformInfo;
+
+	return (jlong) ctx->hwnd;
+}
+
 JNIEXPORT void JNICALL Java_net_runelite_rlawt_AWTContext_createGLContext(JNIEnv *env, jobject self) {
 	AWTContext *ctx = rlawtGetContext(env, self);
 	if (!ctx || !rlawtContextState(env, ctx, false)) {
