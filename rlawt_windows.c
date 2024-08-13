@@ -56,12 +56,18 @@ static bool makeCurrent(JNIEnv *env, HDC dc, HGLRC context) {
 JNIEXPORT jlong JNICALL Java_net_runelite_rlawt_AWTContext_getHWND(JNIEnv *env, jobject self) {
 	AWTContext *ctx = rlawtGetContext(env, self);
 	if (!ctx || !rlawtContextState(env, ctx, true)) {
-		return 0;
+		return (jlong) 0;
+	}
+
+	jint dsLock = ctx->ds->Lock(ctx->ds);
+	if (dsLock & JAWT_LOCK_ERROR) {
+		rlawtThrow(env, "unable to lock ds");
+		return (jlong) 0;
 	}
 
 	ctx->dspi = (JAWT_Win32DrawingSurfaceInfo*) ctx->dsi->platformInfo;
-
-	return (jlong) ctx->hwnd;
+	ctx->ds->Unlock(ctx->ds);
+	return (jlong) ctx->dspi->hwnd;
 }
 
 JNIEXPORT void JNICALL Java_net_runelite_rlawt_AWTContext_createGLContext(JNIEnv *env, jobject self) {

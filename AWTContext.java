@@ -153,6 +153,8 @@ public final class AWTContext
 		return getFramebuffer(true) == 0 ? GL_FRONT : GL_COLOR_ATTACHMENT0;
 	}
 
+	public native long getHWND();
+
 	/**
 	 * Ends the configuration phase of the context, actually creating an OpenGL
 	 * context.

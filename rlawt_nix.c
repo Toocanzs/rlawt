@@ -61,6 +61,15 @@ static bool makeCurrent(JNIEnv *env, Display *dpy, GLXDrawable drawable, GLXCont
 	return true;
 }
 
+JNIEXPORT jlong JNICALL Java_net_runelite_rlawt_AWTContext_getHWND(JNIEnv *env, jobject self) {
+	AWTContext *ctx = rlawtGetContext(env, self);
+	if (!ctx || !rlawtContextState(env, ctx, true)) {
+		return (jlong) 0;
+	}
+
+	return (jlong) 0;
+}
+
 JNIEXPORT void JNICALL Java_net_runelite_rlawt_AWTContext_createGLContext(JNIEnv *env, jobject self) {
 	AWTContext *ctx = rlawtGetContext(env, self);
 	if (!ctx || !rlawtContextState(env, ctx, false)) {
